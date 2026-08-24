@@ -142,7 +142,7 @@ h1.logo{font-family:"Press Start 2P",monospace;white-space:nowrap;font-size:clam
   gap:4px;box-shadow:4px 4px 0 rgba(42,79,214,.35);margin:0 0 14px}
 .placecard .em{font-size:28px}
 .placecard .v{font-size:19px;font-weight:800;line-height:1.3}
-.placecard .meta{font-size:14px;font-weight:700;opacity:.75}
+.placecard .meta{font-size:14px;font-weight:700;opacity:.75;white-space:pre-line}
 .veg{display:inline-block;background:#c9f5cf;border:2px solid var(--ink);border-radius:999px;
   font-size:12px;font-weight:800;padding:2px 9px;margin-top:4px}
 .placecard a{font-size:15px;font-weight:800;color:var(--blue);margin-top:6px}
@@ -424,7 +424,7 @@ function pokazIle(){
 
 $('findbtn').onclick=()=>{
   if(location.protocol==='file:'){
-    $('pstatus').textContent='to działa dopiero po wgraniu na GitHub — z pliku na dysku przeglądarka blokuje lokalizację';return}
+    $('pstatus').textContent='ERROR';return}
   if(!navigator.geolocation){$('pstatus').textContent='przeglądarka nie umie w lokalizację';return}
   $('pstatus').textContent='pytam o lokalizację...';
   navigator.geolocation.getCurrentPosition(poz=>{
@@ -437,12 +437,16 @@ $('findbtn').onclick=()=>{
   },{enableHighAccuracy:true,timeout:10000,maximumAge:60000});
 };
 
-function szukaj(){
+const SERWERY=['https://overpass-api.de/api/interpreter',
+  'https://overpass.kumi.systems/api/interpreter',
+  'https://overpass.private.coffee/api/interpreter'];
+function szukaj(nr){
+  nr=nr||0;
   $('pstatus').textContent='szukam knajp w promieniu '+ladnieMetry(radius)+(radius>10000?' — przy takim zasięgu chwilę to trwa...':'...');
   $('findbtn').disabled=true;
   const [la,lo]=userPos;
   const q='[out:json][timeout:60];nwr["amenity"~"^(restaurant|fast_food|cafe|ice_cream|bar|pub)$"](around:'+radius+','+la+','+lo+');out center tags 900;';
-  fetch('https://overpass-api.de/api/interpreter',{
+  fetch(SERWERY[nr],{
     method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
     body:'data='+encodeURIComponent(q)
   })
@@ -452,7 +456,8 @@ function szukaj(){
       const t=el.tags||{},lat=el.lat||(el.center&&el.center.lat),lon=el.lon||(el.center&&el.center.lon);
       if(!t.name||!lat)return null;
       const c=(t.cuisine||'').toLowerCase();
-      return {name:t.name,lat,lon,cuisine:c,amenity:t.amenity,
+      const adres=[[t['addr:street'],t['addr:housenumber']].filter(Boolean).join(' '),t['addr:city']].filter(Boolean).join(', ');
+      return {name:t.name,lat,lon,cuisine:c,amenity:t.amenity,adres,
         veg:/^(yes|only)$/.test(t['diet:vegetarian']||'')||/^(yes|only)$/.test(t['diet:vegan']||'')||/vegetarian|vegan/.test(c),
         m:dist(userPos[0],userPos[1],lat,lon)};
     }).filter(Boolean).sort((a,b)=>a.m-b.m);
@@ -462,8 +467,9 @@ function szukaj(){
     pokazIle();
   })
   .catch(()=>{
+    if(nr+1<SERWERY.length){$('pstatus').textContent='pierwszy serwer zajęty, próbuję innego...';szukaj(nr+1);return}
     $('findbtn').disabled=false;
-    $('pstatus').textContent='serwer map nie odpowiedział — spróbuj za chwilę';
+    $('pstatus').textContent='serwery map są zajęte — spróbuj za chwilę';
   });
 }
 
@@ -474,10 +480,11 @@ $('rollcity').onclick=()=>{
   $('pem').textContent=p.amenity==='cafe'?'☕':p.amenity==='ice_cream'?'🍨':p.amenity==='fast_food'?'🍟':'🍽';
   $('pname').textContent=p.name;
   const typ=TYPY[p.amenity]||'knajpa';
-  $('pmeta').textContent=typ+' · '+ladnieMetry(p.m)+' stąd';
+  $('pmeta').textContent=typ+' · '+ladnieMetry(p.m)+' stąd'+(p.adres?'\n'+p.adres:'');
   $('pveg').style.display=p.veg?'inline-block':'none';
   const a=$('plink');
-  a.href='https://www.google.com/maps/search/?api=1&query='+p.lat+','+p.lon;
+  const zapytanie=p.adres?p.name+', '+p.adres:p.name+' '+p.lat+','+p.lon;
+  a.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(zapytanie);
   a.style.display='inline';
 };
 
