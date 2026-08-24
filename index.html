@@ -129,6 +129,13 @@ h1.logo{font-family:"Press Start 2P",monospace;white-space:nowrap;font-size:clam
 .chip{font-size:13px;font-weight:700;padding:7px 12px;border:3px solid var(--ink);border-radius:999px;
   background:#fff;box-shadow:2px 2px 0 var(--ink)}
 .chip.on{background:linear-gradient(180deg,var(--sky),#a9d0ff);box-shadow:1px 1px 0 var(--blue);transform:translate(1px,1px)}
+.slider{width:100%;-webkit-appearance:none;appearance:none;height:14px;border-radius:999px;
+  border:3px solid var(--ink);background:linear-gradient(90deg,var(--rose),var(--sky));margin:2px 0 6px}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(180deg,var(--pink),var(--hot));border:3px solid var(--ink);cursor:pointer;box-shadow:2px 2px 0 var(--blue)}
+.slider::-moz-range-thumb{width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(180deg,var(--pink),var(--hot));border:3px solid var(--ink);cursor:pointer}
+.km{font-size:19px;font-weight:800;margin:0 0 12px}
 .chiplabel{font-family:"Press Start 2P",monospace;font-size:8px;color:var(--blue);margin:0 0 6px}
 .placecard{background:linear-gradient(90deg,#fff,#dcefff);border:3px solid var(--ink);border-radius:20px;
   padding:16px 14px;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -209,12 +216,8 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
 
       <div id="fcity" style="display:none">
         <p class="chiplabel">JAK DALEKO</p>
-        <div class="chips" id="radius">
-          <button class="chip on" data-r="500">500 m</button>
-          <button class="chip" data-r="1000">1 km</button>
-          <button class="chip" data-r="2000">2 km</button>
-          <button class="chip" data-r="5000">5 km</button>
-        </div>
+        <input type="range" class="slider" id="rslider" min="0" max="12" step="1" value="2">
+        <p class="km" id="rlabel">2 km</p>
         <p class="chiplabel">NA CO MASZ OCHOTĘ</p>
         <div class="chips" id="cuisine">
           <button class="chip on" data-c="all">wszystko</button>
@@ -371,17 +374,18 @@ document.querySelectorAll('.fmode').forEach(b=>{
   };
 });
 
-let userPos=null,places=[],radius=500,cuisine='all';
+let userPos=null,places=[],radius=2000,cuisine='all';
 const $=i=>document.getElementById(i);
 
-document.querySelectorAll('#radius .chip').forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll('#radius .chip').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on');radius=+b.dataset.r;places=[];
-    $('rollcity').style.display='none';
-    $('pstatus').textContent=userPos?'zmieniony promień — kliknij szukaj jeszcze raz':'';
-  };
-});
+const KM=[500,1000,2000,3000,5000,7000,10000,12000,15000,20000,25000,30000,40000];
+const rs=$('rslider');
+rs.oninput=()=>{
+  radius=KM[+rs.value];
+  $('rlabel').textContent=ladnieMetry(radius);
+  places=[];
+  $('rollcity').style.display='none';
+  $('pstatus').textContent=userPos?'zmieniony promień — kliknij szukaj jeszcze raz':'';
+};
 document.querySelectorAll('#cuisine .chip').forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll('#cuisine .chip').forEach(x=>x.classList.remove('on'));
@@ -434,10 +438,10 @@ $('findbtn').onclick=()=>{
 };
 
 function szukaj(){
-  $('pstatus').textContent='szukam knajp w promieniu '+ladnieMetry(radius)+'...';
+  $('pstatus').textContent='szukam knajp w promieniu '+ladnieMetry(radius)+(radius>10000?' — przy takim zasięgu chwilę to trwa...':'...');
   $('findbtn').disabled=true;
   const [la,lo]=userPos;
-  const q='[out:json][timeout:25];nwr["amenity"~"^(restaurant|fast_food|cafe|ice_cream|bar|pub)$"](around:'+radius+','+la+','+lo+');out center tags 400;';
+  const q='[out:json][timeout:60];nwr["amenity"~"^(restaurant|fast_food|cafe|ice_cream|bar|pub)$"](around:'+radius+','+la+','+lo+');out center tags 900;';
   fetch('https://overpass-api.de/api/interpreter',{
     method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
     body:'data='+encodeURIComponent(q)
