@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>♡ Kuwetkowo ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>">
+<style>
+:root{
+  --ink:#17131f;
+  --pink:#ff86c8;
+  --hot:#ff5fb0;
+  --blue:#2a4fd6;
+  --sky:#cfe4ff;
+  --lilac:#efe2ff;
+  --lemon:#fff6c9;
+  --rose:#ffd0e8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{overscroll-behavior-y:none}
+body{
+  font-family:"Baloo 2","Comic Sans MS",Verdana,sans-serif;
+  color:var(--ink);
+  background-color:#ffe3f3;
+  background-image:
+    radial-gradient(circle at 18% 22%,rgba(255,255,255,.95) 5px,transparent 6px),
+    radial-gradient(circle at 68% 62%,rgba(150,200,255,.6) 7px,transparent 8px),
+    radial-gradient(circle at 44% 86%,rgba(255,134,200,.45) 4px,transparent 5px),
+    linear-gradient(175deg,#ffe0f2,#efe2ff 42%,#dcefff);
+  background-size:110px 110px,110px 110px,110px 110px,100% 100%;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{width:100%;max-width:430px;margin:0 auto;position:relative;padding-top:35px;padding-bottom:108px}
+
+/* ---- bramka ---- */
+#gate{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:18px;
+  background:repeating-linear-gradient(45deg,#ffb7dd 0 20px,#cfe4ff 20px 40px)}
+.gatebox{width:min(360px,100%);background:#fff;border:4px solid var(--ink);border-radius:26px;
+  box-shadow:9px 9px 0 var(--blue);padding:24px 18px;text-align:center}
+.gcat{font-size:62px;display:block;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-9px) rotate(-6deg)}}
+input[type=password]{font-family:inherit;font-size:18px;text-align:center;width:100%;padding:13px;
+  margin:14px 0 8px;border:3px dashed var(--pink);border-radius:16px;background:#fff4fa;color:var(--ink)}
+input[type=password]:focus{outline:3px solid var(--blue);outline-offset:2px}
+.err{color:#e0245e;font-weight:800;font-size:13px;min-height:20px;margin:0 0 8px}
+button{font-family:inherit;cursor:pointer;color:var(--ink)}
+.btn{font-size:18px;font-weight:800;padding:13px 28px;border-radius:999px;border:3px solid var(--ink);
+  background:linear-gradient(180deg,#fff,var(--rose));box-shadow:4px 4px 0 var(--ink);transition:transform .08s}
+.btn.blue{background:linear-gradient(180deg,#fff,var(--sky))}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+:focus-visible{outline:4px solid var(--blue);outline-offset:3px}
+
+/* ---- nagłówek ---- */
+#site{display:none}
+.marquee{position:fixed;top:0;left:0;right:0;z-index:35;background:var(--ink);color:var(--rose);font-family:"Press Start 2P",monospace;font-size:9px;
+  letter-spacing:1px;padding:9px 0;overflow:hidden;white-space:nowrap;border-bottom:4px solid var(--pink)}
+.marquee span{display:inline-block;animation:slidex 20s linear infinite;padding-left:100%}
+@keyframes slidex{to{transform:translateX(-100%)}}
+h1.logo{font-family:"Press Start 2P",monospace;white-space:nowrap;font-size:clamp(11px,5.6vw,26px);
+  color:#fff;text-shadow:3px 3px 0 var(--pink),6px 6px 0 var(--blue);margin:18px 0 16px;text-align:center}
+
+/* ---- panele ---- */
+.pad{padding:0 14px}
+.panel{display:none;background:#fff;border:4px solid var(--ink);border-radius:24px;
+  box-shadow:7px 7px 0 rgba(42,79,214,.3);padding:18px 14px;text-align:center}
+.panel.on{display:block;animation:pop .25s ease-out}
+@keyframes pop{from{transform:scale(.96);opacity:0}}
+.eyebrow{font-size:15px;font-weight:700;opacity:.75;margin:0 0 14px}
+.head{font-family:"Press Start 2P",monospace;font-size:11px;margin:0 0 14px;color:var(--blue)}
+
+/* ---- koło ---- */
+.wheelwrap{position:relative;width:min(268px,74vw);margin:0 auto 16px}
+.tip{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:30px;z-index:3;
+  filter:drop-shadow(0 2px 0 var(--ink))}
+#wheel{width:100%;aspect-ratio:1;border-radius:50%;border:6px solid var(--ink);
+  box-shadow:0 0 0 6px #ffb7dd,0 0 0 12px var(--ink);overflow:hidden;position:relative;
+  transition:transform 4.6s cubic-bezier(.15,.9,.2,1)}
+.half{position:absolute;left:0;right:0;height:50%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2px}
+.half.top{top:0;background:var(--rose);border-bottom:5px solid var(--ink)}
+.half.bot{bottom:0;background:var(--sky)}
+.half .nm{font-size:19px;font-weight:800}
+.half .ic{font-size:30px}
+.hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;
+  border-radius:50%;background:var(--lemon);border:5px solid var(--ink);display:flex;
+  align-items:center;justify-content:center;font-size:22px}
+.out{font-size:20px;font-weight:800;min-height:44px;margin:14px 0 0;padding:10px;border-radius:16px;
+  background:linear-gradient(90deg,#ffe3f3,#fff,#dcefff);border:3px dashed var(--ink)}
+
+/* ---- listy ---- */
+.grid{display:grid;gap:10px;margin:0 0 16px}
+.card{display:flex;gap:10px;align-items:center;border:3px solid var(--ink);border-radius:18px;padding:12px;text-align:left}
+.card .em{font-size:24px}
+.card b{font-family:"Press Start 2P",monospace;font-size:8px;display:block;margin-bottom:2px}
+.card .v{font-size:17px;font-weight:700;line-height:1.25}
+.c1{background:linear-gradient(90deg,#fff,#ffe3f3)}.c1 b{color:var(--hot)}
+.c2{background:linear-gradient(90deg,#fff,#efe2ff)}.c2 b{color:#8a5cff}
+.c3{background:linear-gradient(90deg,#fff,#dcefff)}.c3 b{color:var(--blue)}
+
+/* ---- co robimy ---- */
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 14px}
+.mode{font-size:13px;font-weight:800;padding:10px 4px;border:3px solid var(--ink);border-radius:14px;
+  background:linear-gradient(180deg,#fff,#ffe3f3);box-shadow:3px 3px 0 var(--ink)}
+.mode.on{background:linear-gradient(180deg,var(--pink),var(--hot));color:#fff;box-shadow:2px 2px 0 var(--blue);transform:translate(1px,1px)}
+.actbox{background:linear-gradient(90deg,#fff,#efe2ff);border:3px solid var(--ink);border-radius:20px;
+  padding:16px 14px;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;box-shadow:4px 4px 0 rgba(255,134,200,.5)}
+.actbox .em{font-size:30px}
+.actbox .v{font-size:19px;font-weight:800;line-height:1.3}
+
+/* ---- ważne ---- */
+.stars{font-size:22px;letter-spacing:6px}
+.blink{animation:blink 1s steps(2,start) infinite}
+@keyframes blink{50%{opacity:.15}}
+.shout{font-size:30px;font-weight:800;line-height:1.35;color:var(--hot);
+  text-shadow:2px 2px 0 #fff,5px 5px 0 var(--blue);margin:16px 0}
+.stripe{height:12px;margin:16px 0;border-radius:6px;
+  background:repeating-linear-gradient(45deg,var(--pink) 0 12px,var(--blue) 12px 24px)}
+
+/* ---- jedzenie na mieście ---- */
+.modes.two{grid-template-columns:repeat(2,1fr)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 10px}
+.chip{font-size:13px;font-weight:700;padding:7px 12px;border:3px solid var(--ink);border-radius:999px;
+  background:#fff;box-shadow:2px 2px 0 var(--ink)}
+.chip.on{background:linear-gradient(180deg,var(--sky),#a9d0ff);box-shadow:1px 1px 0 var(--blue);transform:translate(1px,1px)}
+.chiplabel{font-family:"Press Start 2P",monospace;font-size:8px;color:var(--blue);margin:0 0 6px}
+.placecard{background:linear-gradient(90deg,#fff,#dcefff);border:3px solid var(--ink);border-radius:20px;
+  padding:16px 14px;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;box-shadow:4px 4px 0 rgba(42,79,214,.35);margin:0 0 14px}
+.placecard .em{font-size:28px}
+.placecard .v{font-size:19px;font-weight:800;line-height:1.3}
+.placecard .meta{font-size:14px;font-weight:700;opacity:.75}
+.veg{display:inline-block;background:#c9f5cf;border:2px solid var(--ink);border-radius:999px;
+  font-size:12px;font-weight:800;padding:2px 9px;margin-top:4px}
+.placecard a{font-size:15px;font-weight:800;color:var(--blue);margin-top:6px}
+.note2{font-size:13px;font-weight:700;opacity:.75;margin:12px 0 0;min-height:18px}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+
+/* ---- dolna nawigacja ---- */
+nav{position:fixed;bottom:0;left:0;right:0;z-index:40;display:flex;justify-content:center;pointer-events:none}
+.navin{width:100%;max-width:430px;pointer-events:auto;display:grid;grid-template-columns:repeat(4,1fr);
+  gap:6px;padding:10px 10px 12px;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);
+  border-top:4px solid var(--ink);box-shadow:0 -4px 0 #ffb7dd}
+.nb{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:56px;
+  padding:6px 2px;border:3px solid var(--ink);border-radius:16px;
+  background:linear-gradient(180deg,#fff,#dcefff);box-shadow:3px 3px 0 var(--ink)}
+.nb .ne{font-size:20px}
+.nb .nt{font-family:"Press Start 2P",monospace;font-size:7px;line-height:1.4}
+.nb.on{background:linear-gradient(180deg,var(--pink),var(--hot));color:#fff;box-shadow:2px 2px 0 var(--blue);transform:translate(1px,1px)}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gatebox">
+    <span class="gcat">🐈‍⬛</span>
+    <p style="font-family:'Press Start 2P',monospace;font-size:11px;line-height:1.9;margin:14px 0 2px">♡ KUWETKOWO ♡</p>
+    <label for="pw" style="display:block;font-size:13px;opacity:.7;margin:6px 0 0">hasło</label>
+    <input id="pw" type="password" placeholder="miau...?" autocomplete="off">
+    <p class="err" id="err"></p>
+    <button class="btn" id="go">Wchodzę ♡</button>
+  </div>
+</div>
+
+<div id="site" class="wrap">
+  <div class="marquee"><span>♡ WICIA KICIA ♡ PIMPUŚ ♡ WICIA KICIA ♡ PIMPUŚ ♡ WICIA KICIA ♡ PIMPUŚ ♡</span></div>
+  <h1 class="logo">♡ KUWETKOWO ♡</h1>
+
+  <div class="pad">
+    <!-- KOŁO -->
+    <section class="panel on" id="t1">
+      <p class="eyebrow">kto podejmuje decyzje!! :3</p>
+      <div class="wheelwrap">
+        <div class="tip">🎀</div>
+        <div id="wheel">
+          <div class="half top"><span class="ic">🐈‍⬛</span><span class="nm">Wicia Kicia</span></div>
+          <div class="half bot"><span class="nm" style="color:var(--blue)">Pimpuś</span><span class="ic">🐈</span></div>
+          <div class="hub">🐾</div>
+        </div>
+      </div>
+      <button class="btn" id="spin">Kto???</button>
+      <p class="out" id="out">hmmm...???</p>
+    </section>
+
+    <!-- ŻARCIE -->
+    <section class="panel" id="t2">
+      <p class="head">CO JEMY?</p>
+      <div class="modes two">
+        <button class="fmode on" data-fm="home">🏠 w domu</button>
+        <button class="fmode" data-fm="city">🏙 na mieście</button>
+      </div>
+
+      <div id="fhome">
+        <div class="grid">
+          <div class="card c1"><span class="em">🍲</span><div><b>BAZA</b><span class="v" id="f1">???</span></div></div>
+          <div class="card c2"><span class="em">🥗</span><div><b>DODATEK</b><span class="v" id="f2">???</span></div></div>
+          <div class="card c3"><span class="em">🥤</span><div><b>PICIE</b><span class="v" id="f3">???</span></div></div>
+        </div>
+        <button class="btn blue" id="roll">jakie jedzonko? 🍴</button>
+      </div>
+
+      <div id="fcity" style="display:none">
+        <p class="chiplabel">JAK DALEKO</p>
+        <div class="chips" id="radius">
+          <button class="chip on" data-r="500">500 m</button>
+          <button class="chip" data-r="1000">1 km</button>
+          <button class="chip" data-r="2000">2 km</button>
+          <button class="chip" data-r="5000">5 km</button>
+        </div>
+        <p class="chiplabel">NA CO MASZ OCHOTĘ</p>
+        <div class="chips" id="cuisine">
+          <button class="chip on" data-c="all">wszystko</button>
+          <button class="chip" data-c="pizza">pizza</button>
+          <button class="chip" data-c="asian">azjatyckie</button>
+          <button class="chip" data-c="burger">burgery</button>
+          <button class="chip" data-c="kebab">kebab</button>
+          <button class="chip" data-c="cafe">kawiarnia</button>
+          <button class="chip" data-c="sweet">słodkie</button>
+        </div>
+        <div class="placecard">
+          <span class="em" id="pem">📍</span>
+          <span class="v" id="pname">daj lokalizację i losuj</span>
+          <span class="meta" id="pmeta"></span>
+          <span class="veg" id="pveg" style="display:none">🌱 wege w menu</span>
+          <a id="plink" href="#" target="_blank" rel="noopener" style="display:none">pokaż na mapie ↗</a>
+        </div>
+        <div class="btnrow">
+          <button class="btn blue" id="findbtn">📍 szukaj w okolicy</button>
+          <button class="btn" id="rollcity" style="display:none">losuj knajpę 🍴</button>
+        </div>
+        <p class="note2" id="pstatus"></p>
+      </div>
+    </section>
+
+    <!-- CO ROBIMY -->
+    <section class="panel" id="t3">
+      <p class="head">CO ROBIMY?</p>
+      <div class="modes">
+        <button class="mode on" data-m="out">🌳 outdoor</button>
+        <button class="mode" data-m="calm">🛋 w domu</button>
+        <button class="mode" data-m="trip">🚌 wycieczka</button>
+      </div>
+      <div class="actbox"><span class="em" id="ae">✿</span><span class="v" id="av">wybierz kategorię i losuj</span></div>
+      <div style="margin-top:16px"><button class="btn blue" id="ract">🐾 co robimy?</button></div>
+    </section>
+
+    <!-- WAŻNE -->
+    <section class="panel" id="t4">
+      <div class="stars blink">✧ ✦ ✧ ✦ ✧</div>
+      <p class="shout">kici kici kici<br>Wicia Kicia<br><span class="blink">nie szalej</span></p>
+      <div class="stars">🐾 ⭐ 🐾 ⭐ 🐾</div>
+      <div class="stripe"></div>
+      <button class="btn" id="boom">oszaleje!!! ✨</button>
+    </section>
+  </div>
+
+  <nav><div class="navin">
+    <button class="nb on" data-t="t1"><span class="ne">🎡</span><span class="nt">KOŁO</span></button>
+    <button class="nb" data-t="t2"><span class="ne">🍽</span><span class="nt">ŻARCIE</span></button>
+    <button class="nb" data-t="t3"><span class="ne">🐾</span><span class="nt">CO ROBIMY</span></button>
+    <button class="nb" data-t="t4"><span class="ne">⚠</span><span class="nt">WAŻNE</span></button>
+  </div></nav>
+</div>
+
+<canvas id="fx"></canvas>
+
+<script>
+const bags=new Map();
+function pick(list){
+  let b=bags.get(list);
+  if(!b||!b.length){b=list.slice();for(let i=b.length-1;i>0;i--){const j=(Math.random()*(i+1))|0;[b[i],b[j]]=[b[j],b[i]]}bags.set(list,b)}
+  return b.pop();
+}
+const pickAny=a=>a[(Math.random()*a.length)|0];
+
+/* ---------- hasło ---------- */
+const pw=document.getElementById('pw'),err=document.getElementById('err');
+function unlock(){
+  if(pw.value.trim().toLowerCase()==='miaumiaumiau'){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('site').style.display='block';
+  }else{err.textContent='źle!!!!!!!!!!!!!!!!';pw.value='';pw.focus();}
+}
+document.getElementById('go').onclick=unlock;
+pw.addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
+addEventListener('load',()=>pw.focus());
+
+/* ---------- zakładki ---------- */
+document.querySelectorAll('.nb').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.nb').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+    b.classList.add('on');
+    document.getElementById(b.dataset.t).classList.add('on');
+    if(b.dataset.t==='t4')party();
+    scrollTo(0,0);
+  };
+});
+
+/* ---------- konfetti (lekkie) ---------- */
+const fx=document.getElementById('fx'),cx=fx.getContext('2d');
+const EMO=['🐾','⭐','✨','💖','🌸','🎀','🐈‍⬛'];
+let parts=[],running=false,MAX=70;
+function size(){fx.width=innerWidth;fx.height=innerHeight}
+size();addEventListener('resize',size);
+function burst(rx,ry,n){
+  const x=fx.width*rx,y=fx.height*ry;
+  for(let i=0;i<n&&parts.length<MAX;i++){
+    const a=Math.random()*Math.PI*2,s=3+Math.random()*8;
+    parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-4,e:pickAny(EMO),
+      r:Math.random()*6,vr:(Math.random()-.5)*.3,size:16+Math.random()*12,life:1});
+  }
+  if(!running){running=true;requestAnimationFrame(loop)}
+}
+function loop(){
+  cx.clearRect(0,0,fx.width,fx.height);
+  parts=parts.filter(p=>p.life>0&&p.y<fx.height+60);
+  parts.forEach(p=>{
+    p.vy+=.32;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life-=.016;
+    cx.save();cx.globalAlpha=Math.max(p.life,0);cx.translate(p.x,p.y);cx.rotate(p.r);
+    cx.font=p.size+'px serif';cx.textAlign='center';cx.fillText(p.e,0,0);cx.restore();
+  });
+  if(parts.length)requestAnimationFrame(loop);
+  else{running=false;cx.clearRect(0,0,fx.width,fx.height)}
+}
+function party(){burst(.3,.35,20);setTimeout(()=>burst(.7,.35,20),220)}
+document.getElementById('boom').onclick=party;
+
+/* ---------- koło ---------- */
+const wheel=document.getElementById('wheel'),out=document.getElementById('out');
+let rot=0,spinning=false;
+document.getElementById('spin').onclick=()=>{
+  if(spinning)return;spinning=true;out.textContent='kręci się...';
+  const win=Math.random()<.5?0:1,target=win===0?0:180;
+  rot+=360*6+((((target-(rot%360))%360)+360)%360);
+  wheel.style.transform='rotate('+rot+'deg)';
+  setTimeout(()=>{
+    out.textContent='♡ '+(win===0?'Wicia Kicia':'Pimpuś')+' ♡';
+    spinning=false;
+  },4700);
+};
+
+/* ---------- jedzenie ---------- */
+const BAZA=['naleśniki z serem','naleśniki gryczane ze szpinakiem','naleśniki z bananem','naleśniki z ricottą','naleśniki zapiekane ze szpinakiem','kopytka','kopytka z sosem grzybowym','pierogi ruskie','pierogi z kapustą i grzybami','pierogi z jagodami','pierogi ze szpinakiem i fetą','pierogi z soczewicą','pierogi z serem na słodko','uszka z grzybami','pyzy drożdżowe z sosem','pyzy z serem','krokiety z pieczarkami','krokiety z kapustą i grzybami','placki ziemniaczane','placki z cukinii','placek z jabłkami na patelni','makaron z pesto','makaron z serem i pieprzem','makaron z gorgonzolą','makaron z masłem i parmezanem','makaron z dynią i szałwią','spaghetti pomodoro','spaghetti aglio e olio','lasagne','cannelloni ze szpinakiem','łazanki z kapustą','risotto z dynią','risotto z grzybami','risotto cytrynowe','zapiekanka ziemniaczana','zapiekanka z bakłażana','zapiekanka makaronowa','tost z serem na patelni','tosty francuskie','grzanki z pomidorem i mozzarellą','bruschetta','croissant z serem','bułka z jajkiem i szczypiorkiem','jajecznica na maśle','jajka w koszulkach na grzance','jajko w chmurce','jajka faszerowane','omlet z pieczarkami','omlet ze szpinakiem','frittata z ziemniakami','tortilla hiszpańska','menemen','shakshuka','leniwe','kluski śląskie','kluski kładzione z serem','kluski z makiem','knedle ze śliwkami','racuchy z jabłkami','gofry na słono','gofry z bitą śmietaną','pancakes na śniadanie','owsianka na mleku','jaglanka z owocami','gnocchi z masłem szałwiowym','gnocchi z pomidorami','curry z ciecierzycy','curry kokosowe','curry masala z ziemniakami','palak paneer','dal z soczewicy','saag z chlebkiem naan','burrito z fasolą','quesadilla z serem','tortilla z jajkiem','tacos z fasolą i awokado','enchiladas','nachos z serem','wrap z hummusem','pizza margherita','pizza z czterema serami','focaccia z rozmarynem','kaszotto z burakiem','kasza gryczana z jajkiem','pęczak z grzybami','pieczona dynia z kaszą','krem z brokuła','krem z pomidorów','krem z kalafiora','krem z zielonego groszku','zupa dyniowa','zupa cebulowa z grzanką','zupa grzybowa z łazankami','barszcz z uszkami','żurek','kapuśniak','pomidorowa z ryżem','ogórkowa','koperkowa z ziemniakami','zupa fasolowa','minestrone','zupa tortilla','chłodnik litewski','gazpacho','fasolka po bretońsku','gołąbki z kaszą','faszerowana papryka','faszerowana cukinia','ratatouille','leczo z jajkiem','gulasz z papryką','frytki z batata','pieczone ziemniaki z twarożkiem','pieczone bataty z fetą','ziemniaki z gzikiem','hummus z pitą','falafel w picie','sałatka grecka','sałatka z kaszą i fetą','sałatka z burakiem i kozim serem','sałatka z soczewicą i pomidorami','sałatka z grzankami i parmezanem','sałatka makaronowa','tarta ze szpinakiem','quiche z porem','pieczony camembert z pieczywem','pad thai z tofu','ramen miso z jajkiem','ramen shoyu z kukurydzą','udon','gyoza','sajgonki','bao z tofu','sushi z awokado','bibimbap','tofu w sosie teriyaki','ryż smażony','chilli z fasolą','mac and cheese','kotleciki z kaszy jaglanej','kotlety z fasoli','kotlet z kalafiora','burger z ciecierzycy','pieczony kalafior z tahini','arancini z mozzarellą'];
+
+const DODATEK=['surówka z marchewki','surówka z kapusty','mizeria','kiszony ogórek','ogórek małosolny','kapusta kiszona','kiszona rzodkiew','kimchi','buraczki na ciepło','pieczone buraki','sos czosnkowy','sos jogurtowy z koperkiem','tzatziki','aioli','sos tahini','sos serowy','sos pomidorowy z bazylią','sos słodko-kwaśny','sos sriracha','sos sojowy','hummus na boku','guacamole','salsa pomidorowa','pesto prosto z łyżki','chutney mango','dżem z papryki','konfitura z cebuli','żurawina','śmietana','crème fraîche','jogurt grecki','twarożek ze szczypiorkiem','skyr z ziołami','ricotta z miodem','burrata','mozzarella','ser feta w kostkach','kozi ser','ser pleśniowy','góra parmezanu','wiórki żółtego sera','halloumi z grilla','panierowana mozzarella','jajko sadzone na wierzchu','jajko w koszulce','jajko na twardo','jajko przepiórcze','omlet pokrojony w paski','pieczony czosnek','karmelizowana cebula','prażona cebulka','cebulka w occie','pieczarki na maśle','grillowana cukinia','grillowany bakłażan','pieczona papryka','marynowana papryka','papryczki jalapeño','pieczona marchewka z tymiankiem','brokuł na parze','kalafior pieczony','szparagi z masłem','groszek cukrowy','kukurydza z grilla','batat w kostkach','suszone pomidory','pomidorki koktajlowe','awokado w plastrach','oliwki','kapary','kiszona cytryna','rukola z oliwą','roszponka','mieszanka sałat','bazylia z parapetu','świeża kolendra','natka pietruszki','szczypiorek','koperek','mięta','prażone orzechy włoskie','orzechy nerkowca','orzeszki ziemne prażone','prażone słoneczniki','pestki dyni','sezam','granola na wierzchu','chrupiąca ciecierzyca','chipsy z jarmużu','chipsy obok talerza','krakersy','grzanki czosnkowe','pieczywo do wymaczania','pita na ciepło','masło ziołowe','stanowczo za dużo masła','oliwa z dobrej butelki','ocet balsamiczny','sok z cytryny','płatki chili','keczup domowej roboty','musztarda francuska','chrzan'];
+
+const PICIE=['kakao z pianką','gorąca czekolada','mrożona czekolada','mrożone kakao','mleko kokosowe z kakao','kawa z mlekiem','cappuccino','latte macchiato','flat white','americano','espresso na stojąco','kawa po turecku','kawa z kardamonem','cold brew','mrożona latte','kawa mrożona z lodami','kawa z lodem i cynamonem','affogato','chai latte','matcha','matcha latte','mrożona matcha','zielona herbata','herbata biała','oolong','herbata jaśminowa','earl grey z mlekiem','herbata malinowa','herbata miętowa','herbata z imbirem','herbata cynamonowa','herbata owocowa','herbata rooibos','mrożona herbata malinowa','ice tea brzoskwiniowe','yerba mate','rumianek przed snem','napar z melisy','napar z hibiskusa','napar z lipy','napar z pokrzywy','gorąca cytryna z miodem','napój imbirowo-cytrynowy','lemoniada z melisą','lemoniada truskawkowa','lemoniada arbuzowa','lemoniada mango','cytrynada z imbirem','kompot z wiśni','kompot z jabłek','kompot z rabarbaru','kompot z truskawek','kompot z gruszek','ciepły sok jabłkowy z cynamonem','sok pomarańczowy z rurką','sok jabłkowy','sok z marchewki','sok pomidorowy','sok z czarnej porzeczki','sok z granatu','sok z winogron','sok gruszkowy','sok multiwitamina','sok z pomarańczy i marchewki','nektar brzoskwiniowy','woda z cytryną','woda z miętą i ogórkiem','woda z arbuzem','woda z bazylią i limonką','woda gazowana z lodem','woda mineralna prosto z lodówki','woda kokosowa','koktajl bananowy','koktajl truskawkowy','koktajl jagodowy','koktajl z melona','smoothie ze szpinakiem','smoothie mango','smoothie ananasowe','smoothie z awokado','shake waniliowy','shake czekoladowy','shake bananowy','lassi mangowe','mleko truskawkowe','mleko migdałowe','mleko owsiane z cynamonem','mleko ryżowe','gorące mleko z miodem','kefir','maślanka','jogurt pitny','bubble tea','bubble tea taro','oranżada w szklanej butelce','oranżada malinowa','cola z lodem','tonik z limonką','ginger ale','lemon soda','kwas chlebowy'];
+
+document.getElementById('roll').onclick=()=>{
+  const el=['f1','f2','f3'].map(i=>document.getElementById(i)),res=[pick(BAZA),pick(DODATEK),pick(PICIE)];
+  el.forEach((e,i)=>{e.textContent='...';setTimeout(()=>{e.textContent=res[i]},180*(i+1))});
+};
+
+/* ---------- jedzenie na mieście ---------- */
+document.querySelectorAll('.fmode').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.fmode').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    const city=b.dataset.fm==='city';
+    document.getElementById('fhome').style.display=city?'none':'block';
+    document.getElementById('fcity').style.display=city?'block':'none';
+  };
+});
+
+let userPos=null,places=[],radius=500,cuisine='all';
+const $=i=>document.getElementById(i);
+
+document.querySelectorAll('#radius .chip').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('#radius .chip').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');radius=+b.dataset.r;places=[];
+    $('rollcity').style.display='none';
+    $('pstatus').textContent=userPos?'zmieniony promień — kliknij szukaj jeszcze raz':'';
+  };
+});
+document.querySelectorAll('#cuisine .chip').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('#cuisine .chip').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');cuisine=b.dataset.c;
+    if(places.length)pokazIle();
+  };
+});
+
+function dist(a,b,c,d){
+  const R=6371000,r=Math.PI/180;
+  const x=(c-a)*r,y=(d-b)*r;
+  const s=Math.sin(x/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)**2;
+  return Math.round(2*R*Math.asin(Math.sqrt(s)));
+}
+function ladnieMetry(m){return m<1000?m+' m':(m/1000).toFixed(1).replace('.',',')+' km'}
+
+const TYPY={restaurant:'restauracja',fast_food:'na szybko',cafe:'kawiarnia',ice_cream:'lody',bar:'bar',pub:'pub'};
+function filtruj(){
+  return places.filter(p=>{
+    const c=p.cuisine;
+    if(cuisine==='all')return true;
+    if(cuisine==='pizza')return /pizza/.test(c);
+    if(cuisine==='asian')return /asian|chinese|thai|vietnamese|japanese|sushi|ramen|korean|indian|noodle/.test(c);
+    if(cuisine==='burger')return /burger|american/.test(c);
+    if(cuisine==='kebab')return /kebab|turkish/.test(c);
+    if(cuisine==='cafe')return p.amenity==='cafe'||/coffee/.test(c);
+    if(cuisine==='sweet')return p.amenity==='ice_cream'||/ice_cream|dessert|cake|donut|waffle|crepe/.test(c);
+    return true;
+  });
+}
+function pokazIle(){
+  const n=filtruj().length;
+  $('pstatus').textContent=n?('pasujących miejsc: '+n):'nic nie pasuje do filtra — zmień typ albo promień';
+  $('rollcity').style.display=n?'inline-block':'none';
+}
+
+$('findbtn').onclick=()=>{
+  if(location.protocol==='file:'){
+    $('pstatus').textContent='to działa dopiero po wgraniu na GitHub — z pliku na dysku przeglądarka blokuje lokalizację';return}
+  if(!navigator.geolocation){$('pstatus').textContent='przeglądarka nie umie w lokalizację';return}
+  $('pstatus').textContent='pytam o lokalizację...';
+  navigator.geolocation.getCurrentPosition(poz=>{
+    userPos=[poz.coords.latitude,poz.coords.longitude];
+    szukaj();
+  },e=>{
+    $('pstatus').textContent=e.code===1?'brak zgody na lokalizację — włącz ją w ustawieniach przeglądarki'
+      :e.code===3?'lokalizacja nie odpowiedziała — spróbuj jeszcze raz'
+      :'nie udało się ustalić lokalizacji';
+  },{enableHighAccuracy:true,timeout:10000,maximumAge:60000});
+};
+
+function szukaj(){
+  $('pstatus').textContent='szukam knajp w promieniu '+ladnieMetry(radius)+'...';
+  $('findbtn').disabled=true;
+  const [la,lo]=userPos;
+  const q='[out:json][timeout:25];nwr["amenity"~"^(restaurant|fast_food|cafe|ice_cream|bar|pub)$"](around:'+radius+','+la+','+lo+');out center tags 400;';
+  fetch('https://overpass-api.de/api/interpreter',{
+    method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:'data='+encodeURIComponent(q)
+  })
+  .then(r=>{if(!r.ok)throw 0;return r.json()})
+  .then(d=>{
+    places=(d.elements||[]).map(el=>{
+      const t=el.tags||{},lat=el.lat||(el.center&&el.center.lat),lon=el.lon||(el.center&&el.center.lon);
+      if(!t.name||!lat)return null;
+      const c=(t.cuisine||'').toLowerCase();
+      return {name:t.name,lat,lon,cuisine:c,amenity:t.amenity,
+        veg:/^(yes|only)$/.test(t['diet:vegetarian']||'')||/^(yes|only)$/.test(t['diet:vegan']||'')||/vegetarian|vegan/.test(c),
+        m:dist(userPos[0],userPos[1],lat,lon)};
+    }).filter(Boolean).sort((a,b)=>a.m-b.m);
+    $('findbtn').disabled=false;
+    $('findbtn').textContent='📍 szukaj jeszcze raz';
+    if(!places.length){$('pstatus').textContent='nic nie znalazłam — spróbuj większy promień';return}
+    pokazIle();
+  })
+  .catch(()=>{
+    $('findbtn').disabled=false;
+    $('pstatus').textContent='serwer map nie odpowiedział — spróbuj za chwilę';
+  });
+}
+
+$('rollcity').onclick=()=>{
+  const lista=filtruj();
+  if(!lista.length){pokazIle();return}
+  const p=pick(lista);
+  $('pem').textContent=p.amenity==='cafe'?'☕':p.amenity==='ice_cream'?'🍨':p.amenity==='fast_food'?'🍟':'🍽';
+  $('pname').textContent=p.name;
+  const typ=TYPY[p.amenity]||'knajpa';
+  $('pmeta').textContent=typ+' · '+ladnieMetry(p.m)+' stąd';
+  $('pveg').style.display=p.veg?'inline-block':'none';
+  const a=$('plink');
+  a.href='https://www.google.com/maps/search/?api=1&query='+p.lat+','+p.lon;
+  a.style.display='inline';
+};
+
+/* ---------- co robimy ---------- */
+const AKT={
+ out:{emoji:'🌳',list:['spacer w parku, który ma dużo kwiatów','długi spacer po lesie','spacer po parku w innej dzielnicy','spacer wokół jeziora','spacer po plaży','spacer wzdłuż rzeki','wieczorny spacer po deszczu','spacer o północy','poranny spacer przed śniadaniem','spacer z lodami po zmroku','spacer z aparatem i zdjęcia detali','spacer z podcastem w słuchawkach','spacer po alei starych drzew','spacer przez most i patrzenie na wodę','przejście całej długiej ulicy od początku do końca','szukanie ławki z najlepszym widokiem','rower nad wodę','trasa rowerowa wzdłuż rzeki','rower do sąsiedniej wsi','rower przez most o zmroku','objazd rowerowy po wszystkich parkach w mieście','wypożyczenie rowerów miejskich na godzinę','rower na śniadanie do innej dzielnicy','mycie roweru i smarowanie łańcucha','bieganie w wolnym tempie','wieczorne bieganie przy latarniach','jogging w parku o poranku','bieg po schodach w parku','trening interwałowy na stadionie','nordic walking','siłownia plenerowa','podciąganie na drążku w parku','trening z gumami na dworze','skakanka na podwórku','rozciąganie na trawie','joga w parku','rolki na gładkiej ścieżce','wrotki w skateparku','deskorolka na płaskim','hulajnoga po mieście','nauka jazdy na rolkach','łyżwy na lodowisku','sanki na górce','budowanie bałwana','rzucanie śnieżkami','morsowanie','badminton w parku','ping pong na betonowym stole','kosz na boisku','rzuty do kosza na czas','siatkówka plażowa','tenis na orliku','frisbee na trawie','petanka na piasku','minigolf','dwa ognie z kimś','slackline między drzewami','wspinaczka na ściance zewnętrznej','podejście na najbliższe wzgórze','szlak z widokiem na końcu','marsz na najwyższe wzniesienie w okolicy','wejście na wieżę widokową','leśna ścieżka edukacyjna','zbieranie grzybów','zbieranie kasztanów i liści','szukanie ładnych kamieni nad rzeką','obserwowanie ptaków przez lornetkę','karmienie kaczek nad stawem','karmienie wiewiórek orzechami','fotografowanie kotów z okolicy','rysowanie krajobrazu w plenerze','czytanie książki na ławce','piknik na kocu','śniadanie na trawie w parku','kawa w parku z termosem','kawa na wynos i ławka nad wodą','wypad na lody i długa trasa powrotna','spacer na targ po warzywa','grillowanie w ogrodzie','ognisko z pieczonymi ziemniakami','hamak między drzewami','leżakowanie na plaży miejskiej','pływanie w jeziorze','kąpiel w rzece w upał','zachód słońca na dachu','patrzenie na gwiazdy poza miastem','obserwacja mgły nad polem','puszczanie latawca','bańki mydlane w parku','plac zabaw z huśtawkami','sadzenie kwiatów na balkonie','pielenie ogródka','podlewanie ogródka o zmroku','spacer po ogrodzie botanicznym','park rzeźby pod chmurką','spacer wzdłuż torów','nowa trasa po okolicy, bez mapy','wyprawa po najlepszą pizzę w mieście','poranne bieganie nad wodą','gra w badmintona bez siatki na plaży','zbieranie śmieci w parku przy okazji spaceru','liczenie mostów po drodze']},
+ calm:{emoji:'🛋',list:['maraton filmów pod kocem','serial na Netflixie','nowy serial, dwa pierwsze odcinki','powrót do serialu, którego nie skończyliście','dokument o zwierzętach','dokument o kosmosie','stary ulubiony film jeszcze raz','kino domowe z popcornem','anime wieczorem','komedia, żeby się nie zastanawiać','horror przy zapalonym świetle','seans z pizzą na kolanach','maraton krótkich filmów na YouTube','oglądanie starych teledysków','podcast kryminalny','gierka na konsoli','gra kooperacyjna we dwoje','stara gra z dzieciństwa','mario kart','gra na telefonie na czas','turniej w jedną grę do trzech zwycięstw','gra planszowa online','planszówka','karty','szachy','warcaby','chińczyk','scrabble','puzzle przy herbacie','sudoku','krzyżówki','quiz o wszystkim','kalambury','zgadywanie piosenek','układanie kostki Rubika','obserwowanie ptaków za oknem','karmnik za oknem i lornetka','patrzenie na kota przez pół godziny','zabawa z kotem wędką','czesanie kota','sesja zdjęciowa kota','leżenie z kotem i nicnierobienie','czytanie obok siebie','audiobook przy herbacie','komiks','przeglądanie albumu ze zdjęciami','sortowanie zdjęć w telefonie','robienie kolażu ze zdjęć','słuchanie płyty od początku do końca','układanie playlisty','karaoke w domu','taniec w salonie do jednej piosenki','nauka piosenki na instrumencie','malowanie akwarelami','rysowanie kotów','kolorowanka','origami','lepienie z gliny','robótki na drutach','szydełkowanie','model do sklejania','budowanie z klocków','świece i cisza','domowe spa z maseczkami','kąpiel i podcast','masaż karku','rozciąganie przy filmie','joga z filmiku','medytacja przez dziesięć minut','drzemka','leżenie i słuchanie deszczu','pieczenie ciasta','domowe ciasteczka','lepienie pierogów','domowa pizza od podstaw','gotowanie czegoś nowego z przepisu','naleśniki na kolację','pieczenie chleba','kiszenie ogórków','robienie lemoniady','degustacja herbat','parzenie kawy inaczej niż zwykle','wieczór z serem i winogronami','zamówienie jedzenia i serial','porządki w szafie z muzyką','układanie książek na nowo','przestawianie mebli','wieszanie zdjęć na ścianie','sprzątanie biurka','wyrzucanie rzeczy, które nie działają','przesadzanie roślin','przycinanie kwiatów','nowa roślina z sadzonki','planowanie następnego wyjazdu','przeglądanie map i wybieranie tras','lista filmów do obejrzenia','pisanie kartek do rodziny','telefon do babci','nauka kilku słów w nowym języku','tutorial o czymś zupełnie nowym','triki karciane','rysowanie planu mieszkania marzeń']},
+ trip:{emoji:'🚌',list:['pociąg do innego miasta','weekend w innym mieście','wypad samochodem bez planu','kajaki na jeziorze','kajaki na rzece','spływ pontonem','rowerki wodne','SUP na jeziorze','żaglówka na jeziorze','rejs statkiem po rzece','tramwaj wodny','wypożyczalnia łódek w parku','skutery wodne','wyjazd nad jezioro','plaża poza sezonem','morze na jeden dzień','góry na jeden dzień','szlak w górach z noclegiem','park narodowy i szlak','wodospad w lesie','jaskinia z przewodnikiem','kopalnia soli','zamek do zwiedzania','ruiny nad jeziorem','pałac z ogrodem','zabytkowy klasztor z ogrodem','skansen','stara fabryka zamieniona na galerię','muzeum sztuki nowoczesnej','wystawa fotografii','muzeum techniki','muzeum kolejnictwa','planetarium','akwarium','zoo','mini zoo w gospodarstwie','alpakarium','motylarnia','palmiarnia','ogród botaniczny w innym mieście','stadnina koni i jazda konna','park linowy','tor gokartowy','park rozrywki','wesołe miasteczko','aquapark','termy','escape room','kręgle','bilard','kino studyjne','kino plenerowe','spektakl w teatrze','stand-up','koncert w klubie','festiwal muzyczny','festiwal jedzenia','targ staroci','targ śniadaniowy','jarmark','pchli targ w innym mieście','market z roślinami','winnica z degustacją','browar z wycieczką','palarnia kawy z degustacją','serowarnia','pasieka i miód prosto z ula','gospodarstwo z owocami do zbierania','sad i zbieranie jabłek','pole lawendy','pole słoneczników','lodziarnia w innym mieście','wyprawa po najlepszy sernik w okolicy','kawiarnia w dzielnicy, w której nigdy nie byliście','śniadanie w innym mieście','wieża widokowa','punkt widokowy o zachodzie słońca','latarnia morska','most, z którego widać całe miasto','nocleg w domku w lesie','hotel z basenem na jedną noc','kemping z namiotem','glamping','kolejka wąskotorowa','lot balonem','lot szybowcem','wycieczka rowerowa z powrotem pociągiem','nurkowanie z instruktorem','narty na weekend','snowboard','sanki w górach','kulig','quady w terenie','paintball','mecz na stadionie','zwiedzanie miasta z audioprzewodnikiem','trasa po muralach','wyjazd do rodziny na obiad','odwiedziny u znajomych w innym mieście','wyspa na jeziorze i piknik','przejażdżka zabytkowym tramwajem']}
+};
+let mode='out';
+document.querySelectorAll('.mode').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.mode').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');mode=b.dataset.m;
+  };
+});
+document.getElementById('ract').onclick=()=>{
+  const v=document.getElementById('av'),e=document.getElementById('ae');
+  v.textContent='...';
+  setTimeout(()=>{e.textContent=AKT[mode].emoji;v.textContent=pick(AKT[mode].list);},260);
+};
+</script>
+</body>
+</html>
