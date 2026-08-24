@@ -384,7 +384,7 @@ rs.oninput=()=>{
   $('rlabel').textContent=ladnieMetry(radius);
   places=[];
   $('rollcity').style.display='none';
-  $('pstatus').textContent=userPos?'zmieniony promień — kliknij szukaj jeszcze raz':'';
+  $('pstatus').textContent=userPos?'zmieniony promień - kliknij szukaj jeszcze raz':'';
 };
 document.querySelectorAll('#cuisine .chip').forEach(b=>{
   b.onclick=()=>{
@@ -418,7 +418,7 @@ function filtruj(){
 }
 function pokazIle(){
   const n=filtruj().length;
-  $('pstatus').textContent=n?('pasujących miejsc: '+n):'nic nie pasuje do filtra — zmień typ albo promień';
+  $('pstatus').textContent=n?('pasujących miejsc: '+n):'nic nie pasuje do filtra - zmień typ albo promień';
   $('rollcity').style.display=n?'inline-block':'none';
 }
 
@@ -431,8 +431,8 @@ $('findbtn').onclick=()=>{
     userPos=[poz.coords.latitude,poz.coords.longitude];
     szukaj();
   },e=>{
-    $('pstatus').textContent=e.code===1?'brak zgody na lokalizację — włącz ją w ustawieniach przeglądarki'
-      :e.code===3?'lokalizacja nie odpowiedziała — spróbuj jeszcze raz'
+    $('pstatus').textContent=e.code===1?'brak zgody na lokalizację - włącz ją w ustawieniach przeglądarki'
+      :e.code===3?'lokalizacja nie odpowiedziała - spróbuj jeszcze raz'
       :'nie udało się ustalić lokalizacji';
   },{enableHighAccuracy:true,timeout:10000,maximumAge:60000});
 };
@@ -442,7 +442,7 @@ const SERWERY=['https://overpass-api.de/api/interpreter',
   'https://overpass.private.coffee/api/interpreter'];
 function szukaj(nr){
   nr=nr||0;
-  $('pstatus').textContent='szukam knajp w promieniu '+ladnieMetry(radius)+(radius>10000?' — przy takim zasięgu chwilę to trwa...':'...');
+  $('pstatus').textContent='szukam knajp w promieniu '+ladnieMetry(radius)+(radius>10000?' - przy takim zasięgu chwilę to trwa...':'...');
   $('findbtn').disabled=true;
   const [la,lo]=userPos;
   const q='[out:json][timeout:60];nwr["amenity"~"^(restaurant|fast_food|cafe|ice_cream|bar|pub)$"](around:'+radius+','+la+','+lo+');out center tags 900;';
@@ -463,13 +463,13 @@ function szukaj(nr){
     }).filter(Boolean).sort((a,b)=>a.m-b.m);
     $('findbtn').disabled=false;
     $('findbtn').textContent='📍 szukaj jeszcze raz';
-    if(!places.length){$('pstatus').textContent='nic nie znalazłam — spróbuj większy promień';return}
+    if(!places.length){$('pstatus').textContent='nic nie znalazłam - spróbuj większy promień';return}
     pokazIle();
   })
   .catch(()=>{
     if(nr+1<SERWERY.length){$('pstatus').textContent='pierwszy serwer zajęty, próbuję innego...';szukaj(nr+1);return}
     $('findbtn').disabled=false;
-    $('pstatus').textContent='serwery map są zajęte — spróbuj za chwilę';
+    $('pstatus').textContent='serwery map są zajęte - spróbuj za chwilę';
   });
 }
 
@@ -483,8 +483,8 @@ $('rollcity').onclick=()=>{
   $('pmeta').textContent=typ+' · '+ladnieMetry(p.m)+' stąd'+(p.adres?'\n'+p.adres:'');
   $('pveg').style.display=p.veg?'inline-block':'none';
   const a=$('plink');
-  const zapytanie=p.adres?p.name+', '+p.adres:p.name+' '+p.lat+','+p.lon;
-  a.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(zapytanie);
+  const szukaneNazwa=p.adres?p.name+' '+p.adres:p.name;
+  a.href='https://www.google.com/maps/search/'+encodeURIComponent(szukaneNazwa)+'/@'+p.lat+','+p.lon+',17z';
   a.style.display='inline';
 };
 
